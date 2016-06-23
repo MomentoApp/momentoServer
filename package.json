@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "sudo npm install && node server/server.js"
+    "start": "sudo npm install && nodemon server/server.js"
   },
   "devDependencies": {
     "body-parser": "^1.15.1",
