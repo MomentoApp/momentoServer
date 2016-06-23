@@ -3,15 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node server/server.js"
   },
   "dependencies": {
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-react": "^5.1.1",
-    "react": "^15.1.0",
-    "react-native": "0.27.2",
-    "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
-    "react-native-router-flux": "^3.30.0"
+    "react": "^15.1.0"
   },
   "devDependencies": {
     "eslint": "^2.12.0",
