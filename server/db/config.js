@@ -3,7 +3,7 @@ module.exports = {
   password: process.env.db_password,
   database: process.env.db_database,
   config: {
-    host: process.env.db_host,
+    host: 'momento.caxamxz9bjrd.us-west-2.rds.amazonaws.com',
     dialect: 'postgres',
     pool: {
       max: 5,
