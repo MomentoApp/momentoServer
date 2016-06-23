@@ -1,5 +1,5 @@
 module.exports = {
-  username: 'momento',
+  username: process.env.db_username,
   password: 'Hackreactor',
   database: 'momento',
   config: {
