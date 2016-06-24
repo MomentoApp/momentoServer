@@ -9,10 +9,19 @@ module.exports = {
       .catch(cb);
   },
   post: (newUser, cb) => {
-    db.User.create({
-      name: newUser.name,
+    db.User.findOrCreate({
+      where: { name: newUser.name },
     })
-      .then((user) => cb(null, user))
-      .catch(cb);
+      .spread((user, created) => {
+        console.log(user.get({
+          plain: true,
+        }));
+        console.log(created);
+      });
+    // db.User.create({
+    //   name: newUser.name,
+    // })
+    //   .then((user) => cb(null, user))
+    //   .catch(cb);
   },
 };

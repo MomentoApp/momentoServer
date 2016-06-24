@@ -17,6 +17,9 @@ const User = sequelize.define('User', {
 const Video = sequelize.define('Video', {
   url: Sequelize.STRING,
   point: Sequelize.GEOMETRY,
+  title: Sequelize.STRING(20),
+  username: Sequelize.STRING(20),
+  location: Sequelize.STRING,
 }, {
   freezeTableName: true,
 });

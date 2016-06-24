@@ -19,13 +19,19 @@ db.sequelize.sync({ force: true })
       url: 'https://instagram.fsjc1-2.fna.fbcdn.net/t50.2886-16/13477956_200851573643145_931110641_n.mp4',
       point: { type: 'Point', coordinates: [37.7837221, -122.4091839] },
       UserId: 1,
+      username: 'mango',
+      title: '#hackerslife',
+      location: 'Hack Reactor',
     });
 
-    // west san francisco centre
+    // westfield san francisco centre
     db.Video.create({
       url: 'https://instagram.fsjc1-2.fna.fbcdn.net/t50.2886-16/13477956_200851573643145_931110641_n.mp4',
       point: { type: 'Point', coordinates: [37.7847912, -122.40713522] },
       UserId: 1,
+      username: 'mango',
+      title: '#fooood',
+      location: 'Westfield San Francisco Centre',
     });
 
     // powell station exit
@@ -33,6 +39,9 @@ db.sequelize.sync({ force: true })
       url: 'https://instagram.fsjc1-2.fna.fbcdn.net/t50.2886-16/13477956_200851573643145_931110641_n.mp4',
       point: { type: 'Point', coordinates: [37.784415, -122.408103] },
       UserId: 1,
+      username: 'mango',
+      title: '#party',
+      location: 'Powell Station',
     });
 
     // old jerusalem
@@ -40,6 +49,9 @@ db.sequelize.sync({ force: true })
       url: 'https://instagram.fsjc1-2.fna.fbcdn.net/t50.2886-16/13477956_200851573643145_931110641_n.mp4',
       point: { type: 'Point', coordinates: [37.7493593, -122.4183427] },
       UserId: 1,
+      username: 'mango',
+      title: '#bestfoodever',
+      location: 'Old Jerusalem',
     });
   });
 
