@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
 );
 
 const User = sequelize.define('User', {
-  name: Sequelize.STRING.STRING(20),
+  name: Sequelize.STRING(20),
 }, {
   freezeTableName: true,
 });
