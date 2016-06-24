@@ -13,10 +13,13 @@ module.exports = {
       where: { name: newUser.name },
     })
       .spread((user, created) => {
-        console.log(user.get({
-          plain: true,
-        }));
-        console.log(created);
+        cb(null, user, created);
+
+
+        // cb(null, user.get({
+        //   plain: true,
+        // }));
+        // cb(null, created);
       });
     // db.User.create({
     //   name: newUser.name,
