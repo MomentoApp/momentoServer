@@ -13,7 +13,7 @@ module.exports = {
     User.post(req.body, (err, data, status) => {
       if (err) throw err;
       res.status(201);
-      res.send(`created ${status}`, data);
+      res.send(`created ${status}, ${JSON.stringify(data)}`);
     });
   },
 };
