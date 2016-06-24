@@ -21,6 +21,9 @@ module.exports = {
       url: newVideo.url,
       point: newVideo.point,
       UserId: newVideo.UserId,
+      username: newVideo.username,
+      title: newVideo.title,
+      location: 'somewhere',
     })
       .then((video) => cb(null, video))
       .catch(cb);

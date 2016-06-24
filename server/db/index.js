@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
 );
 
 const User = sequelize.define('User', {
-  name: Sequelize.STRING,
+  name: Sequelize.STRING.STRING(20),
 }, {
   freezeTableName: true,
 });
@@ -18,7 +18,7 @@ const Video = sequelize.define('Video', {
   url: Sequelize.STRING,
   point: Sequelize.GEOMETRY,
   title: Sequelize.STRING(20),
-  username: Sequelize.STRING(20),
+  username: Sequelize,
   location: Sequelize.STRING,
 }, {
   freezeTableName: true,

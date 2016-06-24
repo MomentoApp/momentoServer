@@ -12,19 +12,6 @@ module.exports = {
     db.User.findOrCreate({
       where: { name: newUser.name },
     })
-      .spread((user, created) => {
-        cb(null, user, created);
-
-
-        // cb(null, user.get({
-        //   plain: true,
-        // }));
-        // cb(null, created);
-      });
-    // db.User.create({
-    //   name: newUser.name,
-    // })
-    //   .then((user) => cb(null, user))
-    //   .catch(cb);
+      .spread((user, created) => cb(null, user, created));
   },
 };
