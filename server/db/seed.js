@@ -53,5 +53,26 @@ db.sequelize.sync({ force: true })
       title: '#bestfoodever',
       location: 'Old Jerusalem',
     });
+
+    // soma restaurant and bar
+    db.Video.create({
+      url: 'https://s3-us-west-1.amazonaws.com/momentovids/uploads/VID_20160624_175458.mp4',
+      point: { type: 'Point', coordinates: [37.7828398, -122.4064995] },
+      UserId: 3,
+      username: 'chris',
+      title: '#teamdrinks',
+      location: 'Soma Restaurant & Bar',
+    });
+
+    // cleary court
+    db.Video.create({
+      url: 'https://momentotest.s3.amazonaws.com/uploads%2F3317460.mov',
+      point: { type: 'Point', coordinates: [37.7838873541724, -122.427163699302] },
+      UserId: 2,
+      username: 'nick',
+      title: '#theviee',
+      location: 'Cleary Court',
+    });
+
   });
 

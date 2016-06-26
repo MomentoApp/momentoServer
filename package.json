@@ -10,8 +10,16 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
+    "passport-local" : "~0.1.6",
     "pg": "^5.1.0",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^3.23.3"
+    "sequelize": "^3.23.3",
+    "connect-flash" : "~0.1.1",
+    "ejs" : "~0.8.5", 
+    "bcrypt-nodejs" : "latest", 
+    "morgan": "~1.0.0",
+    "method-override": "~1.0.0"
   }
 }

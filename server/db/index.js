@@ -10,6 +10,8 @@ const sequelize = new Sequelize(
 
 const User = sequelize.define('User', {
   name: Sequelize.STRING(20),
+  facebook_id: Sequelize.BIGINT,
+  facebook_token: Sequelize.STRING,
 }, {
   freezeTableName: true,
 });

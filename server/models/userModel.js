@@ -1,4 +1,5 @@
 const db = require('./../db');
+const bcrypt = require('bcrypt-nodejs');
 
 module.exports = {
   get: (someUser, cb) => {
