@@ -21,8 +21,6 @@ passport.use(new FacebookStrategy({
       })
       .then(user => done(null, user))
       .catch(err => done(err));
-
-      // done(null, profile);
     });
   }));
 
@@ -33,16 +31,6 @@ passport.serializeUser((profile, done) => {
 
 passport.deserializeUser((profile, done) => {
   done(null, profile);
-
-  // User.findOrCreate({
-  //   where: {
-  //     facebook_id: profile.id,
-  //     name: profile.displayName,
-  //     // facebook_token: token,
-  //   },
-  // })
-  //   .then(user => done(null, user))
-  //   .catch(err => done(err));
 });
 
 module.exports = passport;
