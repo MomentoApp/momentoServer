@@ -10,8 +10,19 @@ passport.use(new FacebookStrategy({
 },
   (token, refreshToken, profile, done) => {
     console.log('FACEBOOK PROFILE----', profile, '----FACEBOOK PROFILE');
+    console.log('token----', token, '----token');
     process.nextTick(() => {
-      done(null, profile);
+      User.findOrCreate({
+        where: {
+          facebook_id: profile.id,
+          name: profile.displayName,
+          facebook_token: token,
+        },
+      })
+      .then(user => done(null, user))
+      .catch(err => done(err));
+
+      // done(null, profile);
     });
   }));
 
@@ -21,15 +32,17 @@ passport.serializeUser((profile, done) => {
 });
 
 passport.deserializeUser((profile, done) => {
-  User.findOrCreate({
-    where: {
-      facebook_id: profile.id,
-      name: profile.displayName,
-      // facebook_token: token,
-    },
-  })
-    .then(user => done(null, user))
-    .catch(err => done(err));
+  done(null, profile);
+
+  // User.findOrCreate({
+  //   where: {
+  //     facebook_id: profile.id,
+  //     name: profile.displayName,
+  //     // facebook_token: token,
+  //   },
+  // })
+  //   .then(user => done(null, user))
+  //   .catch(err => done(err));
 });
 
 module.exports = passport;

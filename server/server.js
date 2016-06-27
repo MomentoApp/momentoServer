@@ -4,16 +4,12 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('./auth/passport');
-const flash = require('connect-flash');
 const router = require('./routes');
-
-const morgan = require('morgan');
 
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 
 app
-  .use(morgan('dev'))
   .use(cookieParser())
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
@@ -24,8 +20,7 @@ app
   }))
   .use(passport.initialize())
   .use(passport.session())
-  .use('/', router)
-  .use(flash());
+  .use('/', router);
 
 app.set('view engine', 'ejs');
 
