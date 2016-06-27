@@ -1,7 +1,6 @@
 const userController = require('../controllers/userController');
 const videoController = require('../controllers/videoController');
-// const authController = require('../controllers/authController');
-const passport = require('../auth/passport');
+const authController = require('../controllers/authController');
 const isLoggedIn = require('../auth/helper');
 const router = require('express').Router();
 
@@ -21,20 +20,8 @@ router.get('/profile', isLoggedIn, (req, res) => {
   });
 });
 
-router.get('/auth/facebook',
-  passport.authenticate('facebook', {
-    scope: 'email',
-  }));
-
-router.get('/auth/facebook/callback',
-  passport.authenticate('facebook', {
-    successRedirect: '/profile',
-    failureRedirect: '/',
-  }));
-
-router.get('/logout', (req, res) => {
-  req.logout();
-  res.redirect('/');
-});
+router.get('/auth/facebook', authController.facebook);
+router.get('/auth/facebook/callback', authController.facebook_callback);
+router.get('/logout', authController.logout);
 
 module.exports = router;
