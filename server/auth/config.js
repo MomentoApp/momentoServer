@@ -1,14 +1,16 @@
-// const secret = require('../secret') || null;
+// Deployment (before pushing to Github): comment out line 4, 9, 11, 13
+// Local: comment out line 8, 10, 12
+
+// const secret = require('../secret');
 
 module.exports = {
   facebookAuth: {
-    // clientID: 699168510234037,
-    // clientID: 700922706725284,
     clientID: process.env.fb_clientID,
-    // clientSecret: '78f7f1063669d29dc61ac114ece1914b',
+    // clientID: secret.fb_clientID,
     clientSecret: process.env.fb_clientSecret,
-    // callbackURL: 'http://momento-4.gnzjvesgnp.us-west-2.elasticbeanstalk.com/auth/facebook/callback',
+    // clientSecret: secret.fb_clientSecret,
     callbackURL: process.env.fb_callbackURL,
+    // callbackURL: secret.fb_callbackURL,
   },
   googleAuth: {
     clientID: '',
