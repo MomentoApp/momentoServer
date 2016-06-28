@@ -7,7 +7,7 @@ passport.use(new FacebookStrategy({
   clientID: configAuth.facebookAuth.clientID,
   clientSecret: configAuth.facebookAuth.clientSecret,
   callbackURL: configAuth.facebookAuth.callbackURL,
-  profileFields: ['id', 'email', 'first_name', 'last_name', 'username'],
+  profileFields: ['id', 'email', 'first_name', 'last_name'],
 },
   (token, refreshToken, profile, done) => {
     console.log('FACEBOOK PROFILE----', profile, '----FACEBOOK PROFILE');
