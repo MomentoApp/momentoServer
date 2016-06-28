@@ -13,25 +13,14 @@ passport.use(new FacebookStrategy({
     console.log('FACEBOOK PROFILE----', profile, '----FACEBOOK PROFILE');
     console.log('token----', token, '----token');
     process.nextTick(() => {
-      // User.fineOne({
-      //   where: {
-      //     facebook_id: profile.id,
-      //   },
-      // })
-      //   .then(user => {
-      //     // if no user
-      //       // create
-      //     // if user
-      //       // then 
-      //   })
-      //   .catch(err => done(err));
       User.findOrCreate({
         where: {
           facebook_id: profile.id,
         },
         defaults: {
-          name: profile.displayName,
+          name: `${profile.name.givenName} ${profile.name.familyName}`,
           facebook_token: token,
+          email: profile.emails[0].value,
         },
       })
       .then(user => done(null, user))

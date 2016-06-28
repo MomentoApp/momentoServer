@@ -12,6 +12,9 @@ db.sequelize.sync({ force: true })
 
     db.User.create({
       name: 'chris',
+      facebook_id: 10206111678303889,
+      facebook_token: 'EAAJ9fEjzCaQBAD8L35TMLfWWm3OebNsEYHNQ9ZBupm9el9Y5RZB3MqqS9ZCYQ8Rt5w9cqT5WZC3eZChUttbQc7k7hTsvMdeiN69KBacGEEupIMTZAwtM4Q6VYqYf5qk6vQjuewkasBfFpolEyxfOocwRgUmKUsmKoZD',
+      email: 'cmhchoi@gmail.com',
     });
 
     // hack reactor
@@ -59,7 +62,7 @@ db.sequelize.sync({ force: true })
       url: 'https://s3-us-west-1.amazonaws.com/momentovids/uploads/VID_20160624_175458.mp4',
       point: { type: 'Point', coordinates: [37.7828398, -122.4064995] },
       UserId: 3,
-      username: 'chris',
+      username: 'Chris Choi',
       title: '#teamdrinks',
       location: 'Soma Restaurant & Bar',
     });
@@ -70,9 +73,28 @@ db.sequelize.sync({ force: true })
       point: { type: 'Point', coordinates: [37.7838873541724, -122.427163699302] },
       UserId: 2,
       username: 'nick',
-      title: '#theviee',
+      title: '#theview',
       location: 'Cleary Court',
     });
 
+    // tropisueno
+    db.Video.create({
+      url: 'https://momentotest.s3.amazonaws.com/uploads%2F15929113.mov',
+      point: { type: 'Point', coordinates: [37.7855675423962, -122.403703639069] },
+      UserId: 2,
+      username: 'nick',
+      title: '#tacos',
+      location: 'Tropisueno',
+    });
+
+    // palace of fine arts
+    db.Video.create({
+      url: 'https://s3-us-west-1.amazonaws.com/momentovids/uploads/VID_20160626_133845.mp4',
+      point: { type: 'Point', coordinates: [37.803555, -122.447250] },
+      UserId: 3,
+      username: 'Chris Choi',
+      title: '#gorgeousday',
+      location: 'Palace of Fine Arts Theatre',
+    });
   });
 
