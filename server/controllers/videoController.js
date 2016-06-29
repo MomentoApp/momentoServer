@@ -16,4 +16,11 @@ module.exports = {
       res.send(data);
     });
   },
+  getUserVideo: (req, res) => {
+    console.log('getUserVideo req body', req.params);
+    Video.getUserVideo(req.params.user, (err, data) => {
+      if (err) throw err;
+      res.send(data);
+    });
+  },
 };

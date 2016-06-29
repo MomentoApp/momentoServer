@@ -11,7 +11,7 @@ db.sequelize.sync({ force: true })
     });
 
     db.User.create({
-      name: 'chris',
+      name: 'Chris Choi',
       facebook_id: 10206111678303889,
       facebook_token: 'EAAJ9fEjzCaQBAD8L35TMLfWWm3OebNsEYHNQ9ZBupm9el9Y5RZB3MqqS9ZCYQ8Rt5w9cqT5WZC3eZChUttbQc7k7hTsvMdeiN69KBacGEEupIMTZAwtM4Q6VYqYf5qk6vQjuewkasBfFpolEyxfOocwRgUmKUsmKoZD',
       email: 'cmhchoi@gmail.com',

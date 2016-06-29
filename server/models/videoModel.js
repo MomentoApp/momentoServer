@@ -1,8 +1,8 @@
 const db = require('./../db');
+const finalLike = require('./helper').finalLike;
 
 module.exports = {
   get: (latitude, longitude, radius, cb) => {
-    // console.log(latitude, longitude, radius);
     db.sequelize.query(
       'select * from "Video" where ' +
       'ST_DWithin(ST_SetSRID' +
@@ -12,11 +12,31 @@ module.exports = {
       '(point,4326)::geography, '
       + radius + ' );'
     )
-      .then(video => cb(null, video))
+      .then(videos => {
+        const videoCopies = [];
+        videos[0].forEach((video, i) => {
+          db.Like.findOne({
+            where: {
+              VideoId: video.id,
+              // UserId,
+            },
+          })
+            .then(liked => {
+              const videoCopy = video;
+              if (liked === null) {
+                videoCopy.liked = false;
+                finalLike(videoCopy, videoCopies, videos, i, cb);
+              } else {
+                videoCopy.liked = true;
+                finalLike(videoCopy, videoCopies, videos, i, cb);
+              }
+            })
+              .catch(cb);
+        });
+      })
       .catch(cb);
   },
   post: (newVideo, cb) => {
-    // console.log(newVideo);
     db.Video.create({
       url: newVideo.url,
       point: newVideo.point,
@@ -25,7 +45,38 @@ module.exports = {
       title: newVideo.title,
       location: 'somewhere',
     })
-      .then((video) => cb(null, video))
+      .then(video => cb(null, video))
+      .catch(cb);
+  },
+  getUserVideo: (user, cb) => {
+    db.Video.findAll({
+      where: {
+        UserId: user,
+      },
+    })
+      .then(videos => {
+        cb(null, videos);
+        // const videoCopies = [];
+        // videos[0].forEach((video, i) => {
+        //   db.Like.findOne({
+        //     where: {
+        //       VideoId: video.id,
+        //       // UserId,
+        //     },
+        //   })
+        //     .then(liked => {
+        //       const videoCopy = video;
+        //       if (liked === null) {
+        //         videoCopy.liked = false;
+        //         finalLike(videoCopy, videoCopies, videos, i, cb);
+        //       } else {
+        //         videoCopy.liked = true;
+        //         finalLike(videoCopy, videoCopies, videos, i, cb);
+        //       }
+        //     })
+        //       .catch(cb);
+        // });
+      })
       .catch(cb);
   },
 };
