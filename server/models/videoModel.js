@@ -1,5 +1,6 @@
 const db = require('./../db');
-const finalLike = require('./helper').finalLike;
+const getVideos = require('./helper').getVideos;
+const getUserVideos = require('./helper').getUserVideos;
 
 module.exports = {
   get: (latitude, longitude, radius, cb) => {
@@ -25,10 +26,10 @@ module.exports = {
               const videoCopy = video;
               if (liked === null) {
                 videoCopy.liked = false;
-                finalLike(videoCopy, videoCopies, videos, i, cb);
+                getVideos(videoCopy, videoCopies, videos[0], i, cb);
               } else {
                 videoCopy.liked = true;
-                finalLike(videoCopy, videoCopies, videos, i, cb);
+                getVideos(videoCopy, videoCopies, videos[0], i, cb);
               }
             })
               .catch(cb);
@@ -55,27 +56,26 @@ module.exports = {
       },
     })
       .then(videos => {
-        cb(null, videos);
-        // const videoCopies = [];
-        // videos[0].forEach((video, i) => {
-        //   db.Like.findOne({
-        //     where: {
-        //       VideoId: video.id,
-        //       // UserId,
-        //     },
-        //   })
-        //     .then(liked => {
-        //       const videoCopy = video;
-        //       if (liked === null) {
-        //         videoCopy.liked = false;
-        //         finalLike(videoCopy, videoCopies, videos, i, cb);
-        //       } else {
-        //         videoCopy.liked = true;
-        //         finalLike(videoCopy, videoCopies, videos, i, cb);
-        //       }
-        //     })
-        //       .catch(cb);
-        // });
+        const videoCopies = [];
+        videos.forEach((video, i) => {
+          db.Like.findOne({
+            where: {
+              VideoId: video.id,
+              // UserId,
+            },
+          })
+            .then(liked => {
+              const videoCopy = video;
+              if (liked === null) {
+                videoCopy.dataValues.liked = false;
+                getVideos(videoCopy, videoCopies, videos, i, cb);
+              } else {
+                videoCopy.dataValues.liked = true;
+                getVideos(videoCopy, videoCopies, videos, i, cb);
+              }
+            })
+              .catch(cb);
+        });
       })
       .catch(cb);
   },
