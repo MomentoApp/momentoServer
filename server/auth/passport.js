@@ -25,7 +25,11 @@ passport.use(new FacebookStrategy({
       })
       .spread((user, created) => {
         console.log('USER', user, 'CREATED', created);
-        if (!created) user.facebook_token = token;
+        if (!created) {
+          user.update({
+            facebook_token: token,
+          })
+        }
         done(null, user);
       })
       .catch(err => done(err));
