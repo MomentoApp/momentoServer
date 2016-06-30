@@ -1,6 +1,5 @@
 const db = require('./../db');
 const getVideos = require('./helper').getVideos;
-const getUserVideos = require('./helper').getUserVideos;
 
 module.exports = {
   get: (latitude, longitude, radius, cb) => {
@@ -78,5 +77,21 @@ module.exports = {
         });
       })
       .catch(cb);
+  },
+  delete: (video, user, cb) => {
+    db.Video.findOne({
+      where: {
+        id: video,
+      },
+    })
+      .then(found => {
+        if (found.UserId === Number(user) || Number(user) === 0) {
+          found.destroy();
+          cb(null, 'Video deleted');
+        } else {
+          cb(null, 'Permission denied');
+        }
+      })
+      .catch(cb('Error'));
   },
 };

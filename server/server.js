@@ -28,3 +28,4 @@ app.listen(port, () => {
   console.log(`Connected to ${host}:${port}`);
 });
 
+module.exports = { app };

@@ -23,4 +23,11 @@ module.exports = {
       res.send(data);
     });
   },
+  deleteVideo: (req, res) => {
+    console.log('delete video req body', req.params);
+    Video.delete(req.params.video, req.params.user, (err, data) => {
+      if (err) throw err;
+      res.send(data);
+    })
+  },
 };

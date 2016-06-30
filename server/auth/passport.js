@@ -23,7 +23,11 @@ passport.use(new FacebookStrategy({
           email: profile.emails[0].value,
         },
       })
-      .then(user => done(null, user))
+      .spread((user, created) => {
+        console.log('USER', user, 'CREATED', created);
+        if (!created) user.facebook_token = token;
+        done(null, user);
+      })
       .catch(err => done(err));
     });
   }));
