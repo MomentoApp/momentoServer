@@ -5,11 +5,13 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('./auth/passport');
 const router = require('./routes');
+const getHeader = require('./helpers/helper').getHeader;
 
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 
 app
+  .get('/*', getHeader)
   .use(cookieParser())
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
