@@ -45,7 +45,7 @@ module.exports = {
         title: newVideo.title,
         location: 'somewhere',
       })
-      .then(video => cb(null, video))
+      .then(video => cb(null, JSON.stringify(video)))
       .catch(cb);
     })
     .catch(cb);
