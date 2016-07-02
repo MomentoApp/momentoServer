@@ -7,8 +7,6 @@ const isLoggedIn = require('../auth/helper');
 const router = require('express').Router();
 const db = require('../db');
 
-const userID = {};
-
 router
   .use((req, res, next) => {
     console.log('HELLO');
@@ -29,12 +27,12 @@ router
   })
   .get('/api/user', userController.get)
   .post('/api/user', userController.post)
-  .get('/api/video/:latitude/:longitude/:radius/:token', videoController.get)
+  .get('/api/video/:latitude/:longitude/:radius', videoController.get)
   .post('/api/video', videoController.post)
-  .post('/api/delete_video/:token/:video', videoController.deleteVideo)
-  .post('/api/like/:token/:video/:liked', likeController.post)
-  .post('/api/view/:token/:video/', viewController.post)
-  .get('/api/user_video/:token', videoController.getUserVideo)
+  .post('/api/delete_video/:user/:video', videoController.deleteVideo)
+  .post('/api/like/:user/:video/:liked', likeController.post)
+  .post('/api/view/:user/:video/', viewController.post)
+  .get('/api/user_video/:user', videoController.getUserVideo)
   // authentication test in web browser
   .get('/', (req, res) => {
     res.render('../server/views/index.ejs');
