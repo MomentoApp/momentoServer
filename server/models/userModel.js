@@ -15,4 +15,24 @@ module.exports = {
     })
       .spread((user, created) => cb(null, user, created));
   },
+  checkToken: (token, cb) => {
+    db.User.findOne({
+      where: { facebook_token: token },
+    })
+      .then(user => cb(null, user))
+      .catch(cb);
+  },
+  update: (id, token, cb) => {
+    db.User.findOne({
+      where: { facebook_id: id },
+    })
+      .then(user => {
+        user.update({
+          where: { facebook_token: token },
+        })
+          .then(user => cb(null, user))
+          .catch(cb);
+      })
+      .catch(cb);
+  }
 };

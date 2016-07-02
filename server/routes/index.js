@@ -5,29 +5,48 @@ const likeController = require('../controllers/likeController');
 const viewController = require('../controllers/viewController');
 const isLoggedIn = require('../auth/helper');
 const router = require('express').Router();
+const db = require('../db');
 
-router.get('/api/user', userController.get);
-router.post('/api/user', userController.post);
+const userID = {};
 
-// router.get('/api/video/:latitude/:longitude/:radius/:user', videoController.get);
-router.get('/api/video/:latitude/:longitude/:radius', videoController.get);
-router.post('/api/video', videoController.post);
-router.post('/api/like/:user/:video/:liked', likeController.post);
-router.post('/api/view/:user/:video/', viewController.post);
-router.get('/api/user_video/:user', videoController.getUserVideo);
-
-router.get('/', (req, res) => {
-  res.render('../server/views/index.ejs');
-});
-
-router.get('/profile', isLoggedIn, (req, res) => {
-  res.render('../server/views/profile.ejs', {
-    user: req.user,
-  });
-});
-
-router.get('/auth/facebook', authController.facebook);
-router.get('/auth/facebook/callback', authController.facebook_callback);
-router.get('/logout', authController.logout);
+router
+  .use((req, res, next) => {
+    console.log('HELLO');
+    if (!userID[req.get('id')]) {
+      db.User.findOne({
+        where: {
+          facebook_id: req.get('id'),
+        },
+      }).then(user => {
+        if (user !== null) userID[req.get('id')] = user.id;
+        console.log('user', userID);
+      }).then(() => {
+        next();
+      });
+    } else {
+      next();
+    }
+  })
+  .get('/api/user', userController.get)
+  .post('/api/user', userController.post)
+  .get('/api/video/:latitude/:longitude/:radius/:token', videoController.get)
+  .post('/api/video', videoController.post)
+  .post('/api/delete_video/:token/:video', videoController.deleteVideo)
+  .post('/api/like/:token/:video/:liked', likeController.post)
+  .post('/api/view/:token/:video/', viewController.post)
+  .get('/api/user_video/:token', videoController.getUserVideo)
+  // authentication test in web browser
+  .get('/', (req, res) => {
+    res.render('../server/views/index.ejs');
+  })
+  // authentication test in web browser
+  .get('/profile', isLoggedIn, (req, res) => {
+    res.render('../server/views/profile.ejs', {
+      user: req.user,
+    });
+  })
+  .get('/auth/facebook', authController.facebook)
+  .get('/auth/facebook/callback', authController.facebook_callback)
+  .get('/logout', authController.logout);
 
 module.exports = router;
