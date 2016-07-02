@@ -8,23 +8,23 @@ const router = require('express').Router();
 const db = require('../db');
 
 router
-  .use((req, res, next) => {
-    console.log('HELLO');
-    if (!userID[req.get('id')]) {
-      db.User.findOne({
-        where: {
-          facebook_id: req.get('id'),
-        },
-      }).then(user => {
-        if (user !== null) userID[req.get('id')] = user.id;
-        console.log('user', userID);
-      }).then(() => {
-        next();
-      });
-    } else {
-      next();
-    }
-  })
+  // .use((req, res, next) => {
+  //   console.log('HELLO');
+  //   if (!userID[req.get('id')]) {
+  //     db.User.findOne({
+  //       where: {
+  //         facebook_id: req.get('id'),
+  //       },
+  //     }).then(user => {
+  //       if (user !== null) userID[req.get('id')] = user.id;
+  //       console.log('user', userID);
+  //     }).then(() => {
+  //       next();
+  //     });
+  //   } else {
+  //     next();
+  //   }
+  // })
   .get('/api/user', userController.get)
   .post('/api/user', userController.post)
   .get('/api/video/:latitude/:longitude/:radius', videoController.get)
