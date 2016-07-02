@@ -5,7 +5,6 @@ const likeController = require('../controllers/likeController');
 const viewController = require('../controllers/viewController');
 const isLoggedIn = require('../auth/helper');
 const router = require('express').Router();
-const db = require('../db');
 
 router
   // .use((req, res, next) => {
@@ -29,10 +28,10 @@ router
   .post('/api/user', userController.post)
   .get('/api/video/:latitude/:longitude/:radius', videoController.get)
   .post('/api/video', videoController.post)
-  .post('/api/delete_video/:user/:video', videoController.deleteVideo)
+  .post('/api/delete_video/:video', videoController.deleteVideo)
   .post('/api/like/:user/:video/:liked', likeController.post)
   .post('/api/view/:user/:video/', viewController.post)
-  .get('/api/user_video/:user', videoController.getUserVideo)
+  .get('/api/user_video/', videoController.getUserVideo)
   // authentication test in web browser
   .get('/', (req, res) => {
     res.render('../server/views/index.ejs');
