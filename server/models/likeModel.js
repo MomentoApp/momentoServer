@@ -1,47 +1,48 @@
 const db = require('./../db');
 
 module.exports = {
-  like: (UserId, VideoId, cb) => {
-    db.Video.findOne({
-      where: {
-        id: VideoId,
-      },
+  like: (facebook_id, VideoId, cb) => {
+    db.User.findOne({
+      where: { facebook_id },
     })
+    .then(user => {
+      db.Video.findOne({
+        where: { id: VideoId },
+      })
       .then(video =>
         db.Like.findOrCreate({
-          where: {
-            UserId,
+          where: { 
             VideoId,
+            UserId: user.id,
           },
         })
-          .spread((like, liked) => {
-            if (liked) video.increment('like_count');
-          })
+        .spread((like, created) => {
+          if (created) video.increment('like_count');
+        })
       )
       .then(() => cb(null, 'like'))
       .catch(cb);
-  },
-  unlike: (UserId, VideoId, cb) => {
-    db.Video.findOne({
-      where: {
-        id: VideoId,
-      },
     })
-      .then(video =>
-        video.decrement('like_count')
-      )
-      .then(() => {
-        db.Like.findOne({
-          where: {
-            UserId,
-            VideoId,
-          },
-        })
-          .then(like =>
-            like.destroy()
-          );
+    .catch(cb);
+  },
+  unlike: (facebook_id, VideoId, cb) => {
+    db.Video.findOne({
+      where: { id: VideoId },
+    })
+    .then(video =>
+      video.decrement('like_count')
+    )
+    .then(() => {
+      db.Like.findOne({
+        where: { VideoId },
+        include: [{
+          model: db.User,
+          where: { facebook_id },
+        }],
       })
-      .then(() => cb(null, 'unliked'))
-      .catch(cb);
+      .then(like => like.destroy());
+    })
+    .then(() => cb(null, 'unliked'))
+    .catch(cb);
   },
 };

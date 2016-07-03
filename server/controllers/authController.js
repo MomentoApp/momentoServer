@@ -1,4 +1,5 @@
 const passport = require('../auth/passport');
+const User = require('../models/userModel');
 
 module.exports = {
   facebook: passport.authenticate('facebook', {
@@ -9,7 +10,9 @@ module.exports = {
     failureRedirect: '/',
   }),
   logout: (req, res) => {
-    req.logout();
-    res.redirect('/');
+    User.logout(req.get('id'), (err, data) => {
+      if (err) throw err;
+      if (data) res.send(data);
+    })
   },
 };

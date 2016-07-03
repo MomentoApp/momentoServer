@@ -58,7 +58,6 @@ module.exports = {
       }],
     })
     .then(videos => {
-      console.log('VIDEOV', videos)
       if (videos === null) throw cb(null, videos);
       const videoCopies = [];
       videos.forEach((video, i) => {
