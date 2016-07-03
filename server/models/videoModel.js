@@ -45,7 +45,7 @@ module.exports = {
         title: newVideo.title,
         location: 'somewhere',
       })
-      .then(video => cb(null, JSON.stringify(video)))
+      .then(video => cb(null, video))
       .catch(cb);
     })
     .catch(cb);
@@ -59,7 +59,7 @@ module.exports = {
     })
     .then(videos => {
       console.log('VIDEOV', videos)
-      if (videos === null) throw cb(null);
+      if (videos === null) throw cb(null, videos);
       const videoCopies = [];
       videos.forEach((video, i) => {
         db.Like.findOne({
