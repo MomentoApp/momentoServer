@@ -10,7 +10,7 @@ module.exports = {
     .catch(cb);
   },
   post: (newUser, facebook_id, facebook_token, cb) => {
-    db.User.find({
+    db.User.findOne({
       where: { facebook_id }, 
     })
     .then(found => {
