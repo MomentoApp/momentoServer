@@ -2,37 +2,58 @@ const db = require('./../db');
 const bcrypt = require('bcrypt-nodejs');
 
 module.exports = {
-  get: (someUser, cb) => {
-    db.User.findAll({
-      // where: { name: someUser.name },
-    })
-      .then(user => cb(null, user))
-      .catch(cb);
-  },
-  post: (newUser, cb) => {
-    db.User.findOrCreate({
-      where: { name: newUser.name },
-    })
-      .spread((user, created) => cb(null, user, created));
-  },
-  checkToken: (token, cb) => {
+  get: (facebook_id, cb) => {
     db.User.findOne({
-      where: { facebook_token: token },
+      where: { facebook_id },
     })
-      .then(user => cb(null, user))
-      .catch(cb);
+    .then(user => cb(null, user))
+    .catch(cb);
   },
-  update: (id, token, cb) => {
-    db.User.findOne({
-      where: { facebook_id: id },
+  post: (newUser, facebook_id, facebook_token, cb) => {
+    db.User.find({
+      where: { facebook_id }, 
     })
-      .then(user => {
-        user.update({
-          where: { facebook_token: token },
+    .then(found => {
+      if (found === null) {
+        db.User.create({
+          name: newUser.name,
+          email: newUser.email,
+          facebook_id,
+          facebook_token,
         })
-          .then(user => cb(null, user))
-          .catch(cb);
+        .then(user => cb(null, user, true));
+      } else {
+        cb(null, found, false);
+      }
+    })
+  },
+  checkToken: (facebook_token, cb) => {
+    db.User.findOne({
+      where: { facebook_token },
+    })
+    .then(user => cb(null, user))
+    .catch(cb);
+  },
+  update: (facebook_id, facebook_token, cb) => {
+    db.User.findOne({
+      where: { facebook_id },
+    })
+    .then(user => {
+      user.update({
+        where: { facebook_token },
       })
+      .then(user => cb(null, user))
       .catch(cb);
-  }
+    })
+    .catch(cb);
+  },
+  logout: (facebook_id, cb) => {
+    db.User.update({
+      facebook_token: null,
+    },{
+      where: { facebook_id }
+    })
+    .then(user => cb(null, user))
+    .catch(cb);
+  },
 };
