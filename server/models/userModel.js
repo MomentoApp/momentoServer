@@ -18,8 +18,8 @@ module.exports = {
         db.User.create({
           name: newUser.name,
           email: newUser.email,
-          facebook_id,
-          facebook_token,
+          facebook_id: facebook_id,
+          facebook_token: facebook_token,
         })
         .then(user => cb(null, user, true));
       } else {
