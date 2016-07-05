@@ -44,6 +44,7 @@ module.exports = {
         UserId: user.id,
         title: newVideo.title,
         location: 'somewhere',
+        thumbnail: newVideo.thumbnailUrl,
       })
       .then(video => cb(null, video))
       .catch(cb);

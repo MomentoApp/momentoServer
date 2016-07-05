@@ -9,10 +9,10 @@ const sequelize = new Sequelize(
 );
 
 const User = sequelize.define('User', {
-  // name: Sequelize.STRING(20),
   name: Sequelize.STRING,
   facebook_id: Sequelize.BIGINT,
   facebook_token: Sequelize.STRING,
+  facebook_pic: Sequelize.STRING,
   email: Sequelize.STRING,
 }, {
   freezeTableName: true,
@@ -32,6 +32,7 @@ const Video = sequelize.define('Video', {
     type: Sequelize.INTEGER,
     defaultValue: 0,
   },
+  thumbnail: Sequelize.STRING,
 }, {
   freezeTableName: true,
 });
