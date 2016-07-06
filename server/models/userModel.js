@@ -10,6 +10,7 @@ module.exports = {
     .catch(cb);
   },
   post: (newUser, facebook_id, facebook_token, facebook_pic, cb) => {
+    console.log('!!!!!!!!!!!!!!!!', facebook_pic)
     db.User.findOne({
       where: { facebook_id }, 
     })
@@ -18,9 +19,9 @@ module.exports = {
         db.User.create({
           name: newUser.name,
           email: newUser.email,
-          facebook_id: facebook_id,
-          facebook_token: facebook_token,
-          facebook_pic: facebook_pic,
+          facebook_id,
+          facebook_token,
+          facebook_pic: newUser.pictureUrl,
         })
         .then(user => cb(null, user, true));
       } else {
@@ -44,7 +45,6 @@ module.exports = {
       user.update({
         where: { 
           facebook_token,
-          facebook_pic,
         },
       })
       .then(user => cb(null, user))

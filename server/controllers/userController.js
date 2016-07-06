@@ -9,7 +9,7 @@ module.exports = {
     });
   },
   post: (req, res) => {
-    console.log('user post req body', req.body);
+    console.log('user post req body', req.get('id'), req.get('token'), req.get('pictureUrl'));
     User.post(req.body, req.get('id'), req.get('token'), req.get('pictureUrl'), (err, data, status) => {
       if (err) throw err;
       res.status(201);
