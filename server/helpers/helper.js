@@ -1,7 +1,7 @@
 const User = require('../models/userModel');
 const https = require('https');
-const secret = require('../secret').header_secret;
-// const secret = process.env.header_secret;
+// const secret = require('../secret').header_secret;
+const secret = process.env.header_secret;
 
 module.exports = {
   headerDetails: (req, outerRes, next) => {
