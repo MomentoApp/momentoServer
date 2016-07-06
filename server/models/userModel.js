@@ -9,8 +9,7 @@ module.exports = {
     .then(user => cb(null, user))
     .catch(cb);
   },
-  post: (newUser, facebook_id, facebook_token, facebook_pic, cb) => {
-    console.log('!!!!!!!!!!!!!!!!', facebook_pic)
+  post: (newUser, facebook_id, facebook_token, cb) => {
     db.User.findOne({
       where: { facebook_id }, 
     })
@@ -23,7 +22,8 @@ module.exports = {
           facebook_token,
           facebook_pic: newUser.pictureUrl,
         })
-        .then(user => cb(null, user, true));
+        .then(user => cb(null, user, true))
+        .catch(cb);
       } else {
         cb(null, found, false);
       }
