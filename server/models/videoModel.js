@@ -15,17 +15,24 @@ module.exports = {
     .then(videos => {
       const videoCopies = [];
       videos[0].forEach((video, i) => {
-        db.Like.findOne({
-          where: { VideoId: video.id },
-          include: [{
-            model: db.User,
-            where: { facebook_id },
-          }],
+        db.User.findOne({
+          where: { facebook_id }, 
         })
-        .then(liked => {
-          const videoCopy = video;
-          videoCopy.liked = liked === null ? false : true;       
-          getVideos(videoCopy, videoCopies, videos[0], i, cb);
+        .then(user => {
+          db.Like.findOne({
+            where: { VideoId: video.id },
+            include: [{
+              model: db.User,
+              where: { facebook_id },
+            }],
+          })
+          .then(liked => {
+            const videoCopy = video;
+            videoCopy.liked = liked === null ? false : true;
+            videoCopy.profileUrl = user.facebook_pic;       
+            getVideos(videoCopy, videoCopies, videos[0], i, cb)
+          })
+          .catch(cb);
         })
         .catch(cb);
       });
@@ -62,17 +69,24 @@ module.exports = {
       if (videos === null) throw cb(null, videos);
       const videoCopies = [];
       videos.forEach((video, i) => {
-        db.Like.findOne({
-          where: { VideoId: video.id },
-          include: [{
-            model: db.User,
-            where: { facebook_id },
-          }],
+        db.User.findOne({
+          where: { facebook_id },
         })
-        .then(liked => {
-          const videoCopy = video;
-          videoCopy.dataValues.liked = liked === null ? false : true;       
-          getVideos(videoCopy, videoCopies, videos, i, cb);
+        .then(user => {
+          db.Like.findOne({
+            where: { VideoId: video.id },
+            include: [{
+              model: db.User,
+              where: { facebook_id },
+            }],
+          })
+          .then(liked => {
+            const videoCopy = video;
+            videoCopy.dataValues.liked = liked === null ? false : true;
+            videoCopy.dataValues.profileUrl = user.facebook_pic;       
+            getVideos(videoCopy, videoCopies, videos, i, cb);
+          })
+          .catch(cb);
         })
         .catch(cb);
       });

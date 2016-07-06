@@ -10,7 +10,7 @@ module.exports = {
   },
   post: (req, res) => {
     console.log('user post req body', req.body);
-    User.post(req.body, req.get('id'), req.get('token'), (err, data, status) => {
+    User.post(req.body, req.get('id'), req.get('token'), req.get('pictureUrl'), (err, data, status) => {
       if (err) throw err;
       res.status(201);
       res.send(JSON.stringify(`created ${status}`));

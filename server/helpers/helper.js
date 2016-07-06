@@ -1,7 +1,7 @@
 const User = require('../models/userModel');
 const https = require('https');
-// const secret = require('../secret').header_secret;
-const secret = process.env.header_secret;
+const secret = require('../secret').header_secret;
+// const secret = process.env.header_secret;
 
 module.exports = {
   headerDetails: (req, outerRes, next) => {
@@ -19,7 +19,7 @@ module.exports = {
           innerRes.on('data', chunk => body += chunk);
           innerRes.on('end', () => {
             if(JSON.parse(body).data) {
-              User.update(req.get('id'), req.get('token'), (err, data) => {
+              User.update(req.get('id'), req.get('token'), req.get('pictureUrl'), (err, data) => {
                 if (err) throw err;
                 if (data) next();
               })

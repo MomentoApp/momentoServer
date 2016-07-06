@@ -9,7 +9,7 @@ module.exports = {
     .then(user => cb(null, user))
     .catch(cb);
   },
-  post: (newUser, facebook_id, facebook_token, cb) => {
+  post: (newUser, facebook_id, facebook_token, facebook_pic, cb) => {
     db.User.findOne({
       where: { facebook_id }, 
     })
@@ -20,6 +20,7 @@ module.exports = {
           email: newUser.email,
           facebook_id: facebook_id,
           facebook_token: facebook_token,
+          facebook_pic: facebook_pic,
         })
         .then(user => cb(null, user, true));
       } else {
@@ -34,13 +35,17 @@ module.exports = {
     .then(user => cb(null, user))
     .catch(cb);
   },
-  update: (facebook_id, facebook_token, cb) => {
+  update: (facebook_id, facebook_token, facebook_pic, cb) => {
+    console.log('called')
     db.User.findOne({
       where: { facebook_id },
     })
     .then(user => {
       user.update({
-        where: { facebook_token },
+        where: { 
+          facebook_token,
+          facebook_pic,
+        },
       })
       .then(user => cb(null, user))
       .catch(cb);
